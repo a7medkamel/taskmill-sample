@@ -37,6 +37,7 @@ module.exports = function(req, res, next) {
       return !!_.find(query, function(term){ return text.indexOf(term) != -1; });
     });
 
+    res.set('x-query', JSON.stringify(query));
     res.send(found);
   })
 };
