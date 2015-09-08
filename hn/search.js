@@ -1,41 +1,42 @@
 /*
 @deploy
-@title HN Who is hiring? Search!
+@title Search HN Who is hiring?
 @output
 {
   "content-type" : "application/json"
 }
-@cache 3600
 */
 
-var rp      = require('request-promise')
-  , Promise = require('bluebird')
-  , _       = require('underscore')
-  ;
+var _ = require('underscore');
 
 module.exports = function(req, res, next) {
-  rp
-    .get('https://hacker-news.firebaseio.com/v0/item/10152809.json')
-    .then(function(data){
-      var obj = JSON.parse(data);
+  var query = req.query['query'];
 
-      Promise
-        .resolve(obj.kids)
-        .map(function(i){
-          return rp
-                  .get('https://hacker-news.firebaseio.com/v0/item/' + i + '.json')
-                  .then(function(data){ return JSON.parse(data); })
-                  .then(function(comment){
-                    return _.pick(comment, 'by', 'id', 'text', 'time');
-                  })
-                  ;
-        })
-        .then(function(jobs){
-          res.send(jobs);
-        });
-    })
-    .catch(function(err){
-      // next(err);
+  this.request('a7medkamel/tm-data/exec/master/hn/who_is_hiring.js', function(err, httpResponse, body){
+    if (err) {
       next(err);
+      return;
+    }
+
+    if (_.isEmpty(query)) {
+      query = [];
+    }
+
+    if (_.isString(query)) {
+      query = [query]
+    }
+
+    var jobs = JSON.parse(body);
+
+    var found = _.filter(jobs, function(job){
+      if (!job.text) {
+        return;
+      }
+
+      var text = job.text.toLowerCase();
+      return !!_.find(query, function(term){ return text.indexOf(term) != -1; });
     });
+
+    res.send(found);
+  })
 };
