@@ -8,9 +8,10 @@
 @cache 3600
 */
 
-var rp = require('request-promise');
-var Promise = require('bluebird');
-var _ = require('underscore');
+var rp      = require('request-promise')
+  , Promise = require('bluebird')
+  , _       = require('underscore')
+  ;
 
 module.exports = function(req, res, next) {
   rp
