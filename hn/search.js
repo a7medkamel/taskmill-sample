@@ -11,7 +11,7 @@ var _ = require('underscore');
 
 module.exports = function(req, res, next) {
   var query = req.query['query'];
-
+res.set('x-query', JSON.stringify(query));
   this.request('a7medkamel/tm-data/exec/master/hn/who_is_hiring.js', function(err, httpResponse, body){
     if (err) {
       next(err);
@@ -37,7 +37,6 @@ module.exports = function(req, res, next) {
       return !!_.find(query, function(term){ return text.indexOf(term) != -1; });
     });
 
-    res.set('x-query', JSON.stringify(query));
     res.send(found);
   })
 };
