@@ -11,6 +11,7 @@
 var rp      = require('request-promise')
   , Promise = require('bluebird')
   , _       = require('underscore')
+  , math    = require('mathjs')
   ;
 
 module.exports = function(req, res, next) {
@@ -18,6 +19,8 @@ module.exports = function(req, res, next) {
     .get('https://hacker-news.firebaseio.com/v0/item/10152809.json')
     .then(function(data){
       var obj = JSON.parse(data);
+      
+      var post_age = (Date.now() - new Date(data.time * 1000)) / 1000;
 
       Promise
         .resolve(obj.kids)
@@ -31,6 +34,8 @@ module.exports = function(req, res, next) {
                   ;
         })
         .then(function(jobs){
+          var cache_for = Math.floor(math.eval('60 + (x / (60 * 30)) ^ e + (x / 60)', { x : post_age }));
+          res.set('x-tm-cache-max-age', cache_for);
           res.send(jobs);
         });
     })
