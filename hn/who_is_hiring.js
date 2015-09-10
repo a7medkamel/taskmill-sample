@@ -20,11 +20,11 @@ module.exports = function(req, res, next) {
     .then(function(data){
       return JSON.parse(data);
     })
-    .then(function(data){
-      var post_age = (Date.now() - new Date(data.time * 1000)) / 1000;
+    .then(function(post){
+      var post_age = (Date.now() - new Date(post.time * 1000)) / 1000;
      
       Promise
-        .resolve(data.kids)
+        .resolve(post.kids)
         .map(function(i){
           return rp
                   .get('https://hacker-news.firebaseio.com/v0/item/' + i + '.json')
