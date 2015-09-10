@@ -18,8 +18,9 @@ module.exports = function(req, res, next) {
   rp
     .get('https://hacker-news.firebaseio.com/v0/item/10152809.json')
     .then(function(data){
-      var obj = JSON.parse(data);
-      
+      return JSON.parse(data);
+    })
+    .then(function(data){
       var post_age = (Date.now() - new Date(obj.time * 1000)) / 1000;
       console.log(post_age);
       res.end();
