@@ -37,6 +37,9 @@ module.exports = function(req, res, next) {
         .then(function(jobs){
           var cache_for = Math.floor(math.eval('60 + (x / 60) + ((x / (60 * 30)) ^ e)', { x : post_age }));
           res.set('x-tm-cache-max-age', cache_for);
+          res.set({
+            post_age : post_age
+          });
           res.send(jobs);
         });
     })
