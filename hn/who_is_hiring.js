@@ -33,7 +33,7 @@ module.exports = function(req, res, next) {
                     return _.pick(comment, 'by', 'id', 'text', 'time');
                   })
                   ;
-        }, { concurrency : 10 }))
+        }, { concurrency : 10 })
         .then(function(jobs){
           var cache_for = Math.floor(math.eval('60 + (x / 60) + (x / (60 * 30)) ^ e', { x : post_age }));
           res.set('x-tm-cache-max-age', cache_for);
