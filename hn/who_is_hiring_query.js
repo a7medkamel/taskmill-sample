@@ -11,24 +11,33 @@
 }
 */
 
-var _ = require('underscore');
+var _     = require('underscore')
+  , sift  = require('sift')
+  ;
 
 module.exports = function(req, res, next) {
-  var query = req.param('query');
-
   this.request('a7medkamel/tm-data/exec/master/hn/who_is_hiring.js', function(err, httpResponse, body){
     if (err) {
       next(err);
       return;
     }
 
-    if (_.isEmpty(query)) {
-      query = [];
+    var query = req.body;
+    if (!query) {
+      var qs = req.query['query'];
+      
+      if (_.isEmpty(qs)) {
+        query = {};
+      }
+      
+      if (_.isString(query)) {
+        query = [query]
+      }
     }
+    
+    
 
-    if (_.isString(query)) {
-      query = [query]
-    }
+    
 
     var jobs = JSON.parse(body);
 
