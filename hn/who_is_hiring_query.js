@@ -28,10 +28,10 @@ module.exports = function(req, res, next) {
       
       if (_.isEmpty(qs)) {
         query = {};
-      }
-      
-      if (_.isString(query)) {
-        query = [query]
+      } else if (_.isString(qs)) {
+        query = { text : new RegExp(qs) };
+      } else if (_.isArray(qs)) {
+        query = { text : new RegExp(qs.join('|')) };
       }
     }
     
