@@ -4,7 +4,7 @@
 @input
 {
   "content-type" : "application/json",
-  "example" : "[seattle]"
+  "example" : "[\"seattle\"]"
 }
 @output
 {
