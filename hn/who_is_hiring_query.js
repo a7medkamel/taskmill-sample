@@ -3,7 +3,8 @@
 @title Search HN Who is hiring?
 @input
 {
-  "content-type" : "application/json"
+  "content-type" : "application/json",
+  "example" : "[seattle]"
 }
 @output
 {
