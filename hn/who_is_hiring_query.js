@@ -14,7 +14,7 @@
 var _ = require('underscore');
 
 module.exports = function(req, res, next) {
-  var query = req.param('query');
+  var query = req.query['query'] || req.body;
 
   this.request('a7medkamel/tm-data/exec/master/hn/who_is_hiring.js', function(err, httpResponse, body){
     if (err) {
