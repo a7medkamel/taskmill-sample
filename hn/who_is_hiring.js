@@ -16,7 +16,7 @@ var rp      = require('request-promise')
 
 module.exports = function(req, res, next) {
   rp
-    .get('https://hacker-news.firebaseio.com/v0/item/10152809.json')
+    .get('https://hacker-news.firebaseio.com/v0/item/10311580.json')
     .then(function(data){
       return JSON.parse(data);
     })
