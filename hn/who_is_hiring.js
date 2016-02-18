@@ -1,11 +1,9 @@
 /*
-@deploy
 @title HN Who is hiring?
 @output
 {
   "content-type" : "application/json"
 }
-@cache 3600
 */
 
 var rp      = require('request-promise')
@@ -36,8 +34,7 @@ module.exports = function(req, res, next) {
         }, { concurrency : 30 })
         .then(function(jobs){
           var cache_for = Math.floor(math.eval('60 + (x / 60) + (x / (60 * 60 * 24)) ^ e', { x : post_age }));
-          res.set('x-tm-cache-max-age', cache_for);
-          res.set('x-hn-post-age', post_age);
+          res.set('cache-control', 'public, max-age=' + cache_for);
           res.send(jobs);
         });
     })

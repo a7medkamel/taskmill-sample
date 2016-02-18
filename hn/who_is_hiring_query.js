@@ -1,5 +1,4 @@
 /*
-@deploy
 @title Search HN Who is hiring?
 @input
 {
