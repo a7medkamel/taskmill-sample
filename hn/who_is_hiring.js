@@ -31,7 +31,7 @@ module.exports = function(req, res, next) {
                     return _.pick(comment, 'by', 'id', 'text', 'time');
                   })
                   ;
-        }, { concurrency : 30 })
+        }, { concurrency : 60 })
         .then(function(jobs){
           var cache_for = Math.floor(math.eval('60 + (x / 60) + (x / (60 * 60 * 24)) ^ e', { x : post_age }));
           res.set('cache-control', 'public, max-age=' + cache_for);
