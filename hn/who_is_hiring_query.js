@@ -38,7 +38,7 @@ module.exports = function(req, res, next) {
       }
 
       var text = job.text.toLowerCase();
-      return !!_.find(query, function(term){ return text.indexOf(term) != -1; });
+      return !!_.find(query, function(term){ return text.indexOf(term.toLowerCase()) != -1; });
     });
 
     res.send(found);
