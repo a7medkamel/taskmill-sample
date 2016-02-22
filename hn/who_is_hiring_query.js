@@ -37,8 +37,12 @@ module.exports = function(req, res, next) {
         return;
       }
 
-      var text = job.text.toLowerCase();
-      return !!_.find(query, function(term){ return text.indexOf(term.toLowerCase()) != -1; });
+      var text  = job.text;
+      return !!_.find(query, function(term){ 
+        var regex = new RegExp('[\\W]+' + term + '[\\W]+', 'gi');
+        
+        return regex.test(text);
+      });
     });
 
     res.send(found);
