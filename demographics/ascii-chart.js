@@ -1,8 +1,9 @@
 /*
-@title ASCII chart for USA population
+@title ASCII chart for regional populations
 @input
 {
-  "content-type" : "text/plain"
+  "content-type" : "text/plain",
+  "example" : "USA"
 }
 @output
 {
