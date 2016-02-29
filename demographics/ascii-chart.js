@@ -1,5 +1,6 @@
 /*
 @title ASCII chart for regional populations
+@type generate
 @input
 {
   "content-type" : "text/plain",
